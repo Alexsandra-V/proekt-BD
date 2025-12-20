@@ -6,9 +6,11 @@ CREATE TABLE ycheniki (
     id_yrovnya int,
     id_kyrsa int,
     id_ychitel int,
+    id_profilya int,
     FOREIGN KEY (id_yrovnya) REFERENCES yroven (id_yrovnya),
     FOREIGN KEY (id_kyrsa) REFERENCES kyrsi (id_kyrsa),
-    FOREIGN KEY (id_ychitel) REFERENCES ychitel (id_ychitel)
+    FOREIGN KEY (id_ychitel) REFERENCES ychitel (id_ychitel),
+    FOREIGN KEY (id_profilya) REFERENCES profil_ychenika (id_profilya)
 
 );
 CREATE TABLE yroven (
