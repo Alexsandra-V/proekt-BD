@@ -4,12 +4,8 @@ CREATE TABLE ycheniki (
     telefon BIGINT,
     bancovscaya_karta BIGINT,
     id_yrovnya int,
-    id_kyrsa int,
-    id_ychitel int,
     id_profilya int,
     FOREIGN KEY (id_yrovnya) REFERENCES yroven (id_yrovnya),
-    FOREIGN KEY (id_kyrsa) REFERENCES kyrsi (id_kyrsa),
-    FOREIGN KEY (id_ychitel) REFERENCES ychitel (id_ychitel),
     FOREIGN KEY (id_profilya) REFERENCES profil_ychenika (id_profilya)
 
 );
@@ -36,9 +32,7 @@ CREATE TABLE yroki (
     vremya_nachala int,
     dlitelnost int,
     id_kyrsa int,
-    id_ychitel int,
-    Foreign Key (id_kyrsa) REFERENCES  kyrsi(id_kyrsa),
-    Foreign Key (id_ychitel) REFERENCES ychitel(id_ychitel)
+    Foreign Key (id_kyrsa) REFERENCES  kyrsi(id_kyrsa)
 );
 CREATE TABLE profil_ychenika (
     id_profilya SERIAL PRIMARY KEY,
