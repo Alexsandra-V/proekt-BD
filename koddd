@@ -209,3 +209,36 @@ INSERT INTO ychenik_v_kyrse (id_profilya, id_kyrsa) VALUES
 (18, 3), (18, 5), (18, 7),
 (19, 4), (19, 6), (19, 8),
 (20, 5), (20, 7), (20, 9);
+--1)
+SELECT y.imya, COUNT(yvk.id_kyrsa) from ycheniki y
+JOIN profil_ychenika pr ON y.id_profilya=pr.id_profilya
+JOIN ychenik_v_kyrse yvk ON pr.id_profilya=yvk.id_profilya
+GROUP BY y.ycheniki_id, y.imya 
+ORDER BY COUNT(yvk.id_kyrsa) DESC
+LIMIT 3;
+--2)
+SELECT SUM(k.cena)
+from ychenik_v_kyrse yvk 
+JOIN kyrsi k ON yvk.id_kyrsa=k.id_kyrsa;
+--3)
+SELECT 
+    y.imya,
+    y.telefon,
+    COALESCE(
+        JSON_AGG(
+            JSON_BUILD_OBJECT(
+                'id_kyrsa', k.id_kyrsa,
+                'nazvanie', k.nazvanie,
+                'cena', k.cena,
+                'kolichestvo_yrokov', k.kolichestvo_yrokov
+            )
+            ORDER BY k.nazvanie
+        ),
+        '[]'::json
+    ) as kursi
+FROM ycheniki y
+LEFT JOIN profil_ychenika py ON y.id_profilya = py.id_profilya
+LEFT JOIN ychenik_v_kyrse yvk ON py.id_profilya = yvk.id_profilya
+LEFT JOIN kyrsi k ON yvk.id_kyrsa = k.id_kyrsa
+GROUP BY y.ycheniki_id, y.imya, y.telefon
+ORDER BY y.imya;
